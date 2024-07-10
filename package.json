@@ -1,0 +1,22 @@
+{
+  "name": "livekit-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest",
+    "dev": "node swagger.js && nodemon index.js",
+    "start": "node swagger.js && node index.js",
+    "swagger": "node swagger.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "livekit-server-sdk": "^2.4.0",
+    "nodemon": "^3.1.3",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
+  }
+}

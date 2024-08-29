@@ -71,9 +71,12 @@ const sendMessage = async (req, res) => {
       LIVEKIT_API_KEY,
       LIVEKIT_SECRET_KEY
     );
+    console.log(message);
     const encoder = new TextEncoder();
     const data = encoder.encode(
-      `${localParticipant}$-${dId}$-${userName}$-${topic}$-${message}`
+      `${localParticipant}$-${dId}$-${topic}$-${userName}$-${JSON.stringify(
+        message
+      )}`
     );
     await room.sendData(roomName, data, 0, {
       destinationIdentities: dId,

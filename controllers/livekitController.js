@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import { AccessToken, RoomServiceClient } from "livekit-server-sdk";
 dotenv.config();
 const { LIVEKIT_SOCKET_URL, LIVEKIT_API_KEY, LIVEKIT_SECRET_KEY } = process.env;
+
 const tokenGenerate = async (req, res) => {
   try {
     const { roomName, participantName } = req.body;
@@ -35,9 +36,10 @@ const tokenGenerate = async (req, res) => {
 };
 
 const sendMessage = async (req, res) => {
-  const topicEnum = ["AUDIO", "VIDEO", "DISCONNECT"];
+  const topicEnum = ["AUDIO", "VIDEO", "DISCONNECT", "CHAT"];
   try {
-    const { roomName, message, dId, topic } = req.body;
+    const { localParticipant, userName, roomName, message, dId, topic } =
+      req.body;
     if (!roomName) {
       return res.status(400).json({
         success: false,
@@ -70,7 +72,9 @@ const sendMessage = async (req, res) => {
       LIVEKIT_SECRET_KEY
     );
     const encoder = new TextEncoder();
-    const data = encoder.encode(`${dId}-${topic}`);
+    const data = encoder.encode(
+      `${localParticipant}$-${dId}$-${userName}$-${topic}$-${message}`
+    );
     await room.sendData(roomName, data, 0, {
       destinationIdentities: dId,
       topic: topic,
